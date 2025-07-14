@@ -3,6 +3,8 @@ import { AuthPayloadDto } from './dto/auth.dto';
 import { AuthService } from './auth.service';
 import { LocalGuard } from './guards/local.guard';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { UserDto } from 'src/user/dto/user.dto';
 
 
 @Controller('auth')
@@ -12,6 +14,7 @@ export class AuthController {
   ){}
   
   @Post('signup')
+  @Serialize(UserDto)
   signup(@Body() createUserDto: CreateUserDto) {
     return this.authService.signup(createUserDto)
   }
