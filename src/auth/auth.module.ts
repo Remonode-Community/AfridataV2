@@ -11,6 +11,8 @@ import { User } from 'src/user/user.entity';
 import { UserModule } from 'src/user/user.module';
 import { ConfigService } from '@nestjs/config';
 import { ConfigModule } from '@nestjs/config';
+import { RefreshJwtGuard } from './guards/refresh-jwt-auth';
+
 
 @Module({
   imports: [
@@ -24,9 +26,9 @@ import { ConfigModule } from '@nestjs/config';
         return { secret, signOptions: { expiresIn: '1h' } }
       }
     }),
-    TypeOrmModule.forFeature([User])
+    TypeOrmModule.forFeature([User]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy, UserService],
+  providers: [AuthService, LocalStrategy, JwtStrategy, UserService, RefreshJwtGuard],
 })
 export class AuthModule {}
